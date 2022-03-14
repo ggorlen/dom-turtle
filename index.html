@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>dom-turtle demo</title>
+  <style>
+  #turtle-container > * {
+    position: absolute;
+  }
+  </style>
+  <script src="js/dom-turtle.js"></script>
+</head>
+<body>
+  <div id="turtle-container"></div>
+
+<script>
+
+// https://en.wikipedia.org/wiki/L-system#Example_2:_Fractal_(binary)_tree
+const rootEl = document.querySelector("#turtle-container");
+const turtle = Turtle.turtle(rootEl);
+turtle.shape('<input value="DOM turtle!">');
+const stampId = turtle.stamp();
+const inputEl = turtle.getstamp(stampId);
+turtle.goto(300, 450);
+turtle.left(90);
+turtle.shape('<input type="radio" name="turtle" checked>');
+
+let axiom = ["0"];
+const rules = {1: "11", 0: "1[0]0"};
+const iterations = 5;
+
+for (let i = 0; i < iterations; i++) {
+  const newAxiom = [];
+
+  for (const c of axiom) {
+    if (rules[c]) {
+      newAxiom.push(...rules[c]);
+    }
+    else {
+      newAxiom.push(c);
+    }
+  }
+
+  axiom = newAxiom;
+}
+
+const stack = [];
+const segSize = 15;
+const instructions = {
+  0: () => {
+    turtle.forward(segSize);
+    turtle.stamp();
+  },
+  1: function () {
+    this[0]();
+  },
+  "[": () => {
+    stack.push({
+      position: turtle.position(),
+      angle: turtle.heading(),
+    });
+    turtle.left(45);
+  },
+  "]": () => {
+    const {position: [x, y], angle} = stack.pop();
+    turtle.goto(x, y);
+    turtle.setheading(angle);
+    turtle.right(45);
+  },
+};
+
+(async () => {
+  for (const c of axiom) {
+    instructions[c]();
+    await new Promise(r => setTimeout(r, 30));
+  }
+
+  for (let i = 0; i < 5; i++) {
+    inputEl.value += "!";
+    await new Promise(r => setTimeout(r, 1000));
+  }
+})();
+
+</script>
+</body>
+</html>
