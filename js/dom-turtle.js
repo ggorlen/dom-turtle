@@ -55,7 +55,6 @@
       stamp: function () {
         var el = document.createElement("div");
         el.innerHTML = this.html;
-        el = el.firstChild;
         rootElement.appendChild(el);
         this.stamps.push(el);
         el.classList.add("turtle-el");

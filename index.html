@@ -21,7 +21,7 @@ const rootEl = document.querySelector("#turtle-container");
 const turtle = Turtle.turtle(rootEl);
 turtle.shape('<input value="DOM turtle!">');
 const stampId = turtle.stamp();
-const inputEl = turtle.getstamp(stampId);
+const stampEl = turtle.getstamp(stampId);
 turtle.goto(300, 450);
 turtle.left(90);
 turtle.shape('<input type="radio" name="turtle" checked>');
@@ -77,7 +77,7 @@ const instructions = {
   }
 
   for (let i = 0; i < 5; i++) {
-    inputEl.value += "!";
+    stampEl.firstChild.value += "!";
     await new Promise(r => setTimeout(r, 1000));
   }
 })();
