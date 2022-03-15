@@ -24,7 +24,7 @@ Ideally, the goal is to integrate most of the [Python turtle API](https://docs.p
 <body>
 
 <!-- always use a specific commit hash -->
-<script src="https://cdn.jsdelivr.net/gh/ggorlen/dom-turtle@d35ac6c/js/dom-turtle.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ggorlen/dom-turtle@88cf054/js/dom-turtle.js"></script>
 <div id="turtle-container"></div>
 <script>
 
